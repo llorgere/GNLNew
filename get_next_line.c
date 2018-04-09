@@ -60,12 +60,20 @@ char	*gnl_read(char	**rest, char *str, int fd)
 	int		ret;
 	char	*tmp;
 
+	//printf("test de gread 1\n");
 	while ((ret = read(fd, buff, BUFF_SIZE)))
 	{
 		buff[ret] = '\0';
 		tmp = *rest;
-		if(!(*rest = ft_strjoin(*rest, buff)))
-			return (NULL);
+	//	printf("test de gread 2 buff est [%s]\n", buff);
+		if (!*rest)
+			*rest = ft_strdup(buff);
+		else
+		{
+			if(!(*rest = ft_strjoin(*rest, buff)))
+				return (NULL);
+		}
+		//printf("test de gread 3 rest est [%s]\n", *rest);
 		free(tmp);
 		if ((str = ft_strchr(*rest, '\n')))
 			return (str);
@@ -84,33 +92,33 @@ int		get_next_line(const int fd, char **line)
 	char		*str;
 	char			*tmp2;
 	
-	printf("test 1\n");
+	//printf("test 1\n");
 	if (fd < 0 || !line || read(fd, rest, 0) < 0)
 		return (-1);
-	printf("test 2 et rest est [%s]\n", rest);
-	//if (rest)
+	//printf("test 2 et rest est [%s]\n", rest);
+	if (rest)
 	str = ft_strchr(rest, '\n');
-	printf("test 3 str est [%s]\n", str);
+	//printf("test 3 str est [%s]\n", str);
 	if (!str)
 		str = gnl_read((char **)&rest, str, fd);
-	printf("test 4 str est [%s]\n", str);
+	//printf("test 4 str est [%s]\n", str);
 	if (str)
 	{
 		*str = '\0';
 		*line = ft_strdup(rest);
 		tmp2 = rest;
-		printf("test boucle\n");
+		//printf("test boucle\n");
 		rest = ft_strdup(str + 1);
 		free(tmp2);
 		return (1);
 	}
-	printf("test 5 rest [%s]\n", rest);
+	//printf("test 5 rest [%s]\n", rest);
 	*line = ft_strdup(rest);
-	printf("test 6\n");
+	//printf("test 6\n");
 	rest = ft_strdup("\0");
-	printf("test 7\n");
+	//printf("test 7\n");
 	//return (0);
-	if (line)
+	if (**line)
 		return (1);
 	else
 		return (0);

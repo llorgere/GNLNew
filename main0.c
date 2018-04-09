@@ -3,8 +3,8 @@
 
 int        main(void)
 {
-	//int fd = open("one_big_fat_line.txt", O_RDONLY);
-	int fd = open("large_file.txt", O_RDONLY);
+	int fd = open("one_big_fat_line.txt", O_RDONLY);
+	//int fd = open("large_file.txt", O_RDONLY);
 	char    *line = NULL;
 	int 	ret;
 	ret = 0;
