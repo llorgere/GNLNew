@@ -10,62 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "get_next_line.h"
-/*
-int		ft_test_rest(char *rest)
-{
-	int		i;
 
-	i = 0;
-	if (rest)
-	{
-		while (rest && i < ((int)ft_strlen(rest) + 1))
-		{
-			if (rest[i] == '\n')
-				return (i);
-			else if (rest[i] == '\0')
-				return (-2 * (i + 1));
-			i++;
-		}
-	}
-	return (-1);
-}
-
-void	ft_copy_to_line(char **rest, char **line)
-{
-	int		j;
-	int		end;
-	char	*tmp;
-	char	*tmpl;
-
-	end = 0;
-	j = ft_test_rest(*rest);
-	if (j < -1)
-	{
-		j = (j / (-2)) - 1;
-		end++;
-	}
-	tmpl = ft_strndup(*rest, j);
-	*line = tmpl;
-	tmp = ft_strdup(*rest + j + 1 - end);
-	free(*rest);
-	*rest = ft_strdup(tmp);
-	free(tmp);
-}
-*/
-char	*gnl_read(char	**rest, char *str, int fd)
+static char	*gnl_read(char	**rest, char *str, int fd)
 {
 	char	buff[BUFF_SIZE + 1];
 	int		ret;
 	char	*tmp;
 
-	//printf("test de gread 1\n");
 	while ((ret = read(fd, buff, BUFF_SIZE)))
 	{
 		buff[ret] = '\0';
 		tmp = *rest;
-	//	printf("test de gread 2 buff est [%s]\n", buff);
 		if (!*rest)
 			*rest = ft_strdup(buff);
 		else
@@ -73,7 +29,6 @@ char	*gnl_read(char	**rest, char *str, int fd)
 			if(!(*rest = ft_strjoin(*rest, buff)))
 				return (NULL);
 		}
-		//printf("test de gread 3 rest est [%s]\n", *rest);
 		free(tmp);
 		if ((str = ft_strchr(*rest, '\n')))
 			return (str);
@@ -91,7 +46,8 @@ int		get_next_line(const int fd, char **line)
 	*/
 	char		*str;
 	char			*tmp2;
-	
+
+	str = NULL;
 	//printf("test 1\n");
 	if (fd < 0 || !line || read(fd, rest, 0) < 0)
 		return (-1);
@@ -180,3 +136,45 @@ int		get_next_line(const int fd, char **line)
 		return (1);
 	}*/
 }
+/*
+int		ft_test_rest(char *rest)
+{
+	int		i;
+
+	i = 0;
+	if (rest)
+	{
+		while (rest && i < ((int)ft_strlen(rest) + 1))
+		{
+			if (rest[i] == '\n')
+				return (i);
+			else if (rest[i] == '\0')
+				return (-2 * (i + 1));
+			i++;
+		}
+	}
+	return (-1);
+}
+
+void	ft_copy_to_line(char **rest, char **line)
+{
+	int		j;
+	int		end;
+	char	*tmp;
+	char	*tmpl;
+
+	end = 0;
+	j = ft_test_rest(*rest);
+	if (j < -1)
+	{
+		j = (j / (-2)) - 1;
+		end++;
+	}
+	tmpl = ft_strndup(*rest, j);
+	*line = tmpl;
+	tmp = ft_strdup(*rest + j + 1 - end);
+	free(*rest);
+	*rest = ft_strdup(tmp);
+	free(tmp);
+}
+*/
